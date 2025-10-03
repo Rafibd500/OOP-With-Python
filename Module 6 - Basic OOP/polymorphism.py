@@ -1,5 +1,5 @@
-# poly = many(multiple)
-# morph = shape
+# Poly = many, Morph = forms
+# Polymorphism = one thing behaving in many ways
 
 class Animal:
     def __init__(self, name):
