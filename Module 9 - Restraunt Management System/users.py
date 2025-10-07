@@ -6,6 +6,22 @@ class User(ABC):
         self.phone = phone
         self.email = email
         self.address = address
+
+class Customer(User):
+    def __init__(self, name, phone, email, address):
+        super().__init__(name, phone, email, address)
+        self.cart = None
+    def view_menu(self, restraunt):
+        restraunt.menu.view_items()
+    def add_to_cart(self, restraunt, item):
+        item = restraunt.menu.find_item(item)
+        if item:
+            pass
+        else:
+            print('Item Not found')
+
+    def view_cart(self):
+        pass
 class Employee(User):
     def __init__(self, name, phone, email, address, designation, salary):
         super().__init__(name, phone, email, address)
@@ -22,7 +38,7 @@ class Admin(User):
         restraunt.view_employee()
     
     def add_item(self, restraunt, item):
-        restraunt.menu.add_food_item(item)
+        restraunt.menu.add_menu_item(item)
 
     def remove_item(self, restraunt, item):
         restraunt.menu.remove_item(item)
@@ -30,7 +46,8 @@ class Admin(User):
 class Restraunt:
     def __init__(self):
         self.employees = []
-        self.menu = FoodItem()
+        self.menu = Menu()
+
     def add_employee(self,employee):
         self.employees.append(employee)
         print(f'{employee.name} added successfully.')
@@ -48,6 +65,7 @@ class Menu:
     def add_menu_item(self, item):
         self.items.append(item)
         print(f'{item.name} added to menu.')
+
     def find_item(self, item_name):
         for item in self.items:
             if(item.name.lowe() == item_name.lower()): return item
@@ -77,3 +95,4 @@ res = Restraunt()
 admin = Admin('admin', '1202', 'ewkj', 'kjkj')
 admin.add_item(res, item)
 foodMenu.view_items()     
+admin.add_item(res, item)
