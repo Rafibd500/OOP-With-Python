@@ -1,5 +1,6 @@
 # All classes will write here
 from abc import ABC
+from order import Order
 class User(ABC):
     def __init__(self, name, phone, email, address):
         self.name = name
@@ -10,23 +11,43 @@ class User(ABC):
 class Customer(User):
     def __init__(self, name, phone, email, address):
         super().__init__(name, phone, email, address)
-        self.cart = None
+        self.cart = Order()
     def view_menu(self, restraunt):
         restraunt.menu.view_items()
-    def add_to_cart(self, restraunt, item):
-        item = restraunt.menu.find_item(item)
+    def add_to_cart(self, restraunt, item_name, quantity):
+        item = restraunt.menu.find_item(item_name)
         if item:
-            pass
+            if quantity > item.quantity:
+                print("Not enough quantity in stock.")
+            else:
+                item.quantity = quantity
+                self.cart.add_item(item)
+                print("Item added to the cart")
         else:
             print('Item Not found')
 
     def view_cart(self):
-        pass
+        print("*****View Cart*****")
+        print("Name\tPrice\tQuantity")
+        for item, quantity in self.cart.items.items():
+            print(f"{item.name}\t{item.price}\t{quantity}")
+
+    def total_price(self):
+        print(f"Total Price: {self.cart.total_price}")
+    
+    def pay_bill(self):
+        print(f"Total {self.cart.total_price} tk paid successfully")
+        self.cart.clear()
+
+
+
 class Employee(User):
     def __init__(self, name, phone, email, address, designation, salary):
         super().__init__(name, phone, email, address)
         self.designation = designation
         self.salary = salary
+
+
 class Admin(User):
     def __init__(self, name, phone, email, address):
         super().__init__(name, phone, email, address)
@@ -39,60 +60,33 @@ class Admin(User):
     
     def add_item(self, restraunt, item):
         restraunt.menu.add_menu_item(item)
-
+    def view_menu(self, restraunt):
+        restraunt.view_menu()
     def remove_item(self, restraunt, item):
         restraunt.menu.remove_item(item)
 
-class Restraunt:
-    def __init__(self):
-        self.employees = []
-        self.menu = Menu()
-
-    def add_employee(self,employee):
-        self.employees.append(employee)
-        print(f'{employee.name} added successfully.')
-
-    def view_employee(self):
-        for employee in self.employees:
-            print(f'{employee.name}, {employee.phone}, {employee.email}, {employee.address}, {employee.designation}, {employee.salary}')
 
 
 
-class Menu:
-    def __init__(self):
-        self.items = []
 
-    def add_menu_item(self, item):
-        self.items.append(item)
-        print(f'{item.name} added to menu.')
+# res = Restraunt()
+# admin = Admin('admin', '1202', 'ewkj', 'kjkj')
+# foodMenu = Menu()
+# item = FoodItem('Burger', 100, 5)
+# item1 = FoodItem('Pizza', 200, 10)
+# item2 = FoodItem('z', 200, 10)
+# admin.add_item(res, item)
+# admin.add_item(res, item1)
+# admin.add_item(res, item2)
+# # foodMenu.add_menu_item(item)
+# # foodMenu.view_items()     
 
-    def find_item(self, item_name):
-        for item in self.items:
-            if(item.name.lowe() == item_name.lower()): return item
-        return None
 
-    def remove_item(self, item_name):
-        item = self.find_item(item_name)
-        if item: self.items.remove(item); print('Item deleted.')
-        else : print('Item Not found.')
-    
-    def view_items(self):
-        print("********* Menu **********")
-        print('Name\tPrice\tQuantity')
-        for item in self.items:
-            print(f'{item.name}\t{item.price}\t{item.quantity}')
+# customer1 = Customer('Rahim',"029309309", "rahim@gg.co", 'dhaka, bd')
+# customer1.view_menu(res)
 
-class FoodItem:
-    def __init__(self, name, price, quantity):
-        self.name = name
-        self.price = price
-        self.quantity = quantity
-
-item = FoodItem('Burger', 100, 5)
-foodMenu = Menu()
-# foodMenu.add_menu_item(item)
-res = Restraunt()
-admin = Admin('admin', '1202', 'ewkj', 'kjkj')
-admin.add_item(res, item)
-foodMenu.view_items()     
-admin.add_item(res, item)
+# item_name =input("Enter a item name:")
+# quantity = int(input("Enter the quantity: "))
+# customer1.add_to_cart(res, item_name, quantity)
+# customer1.view_cart()
+# customer1.total_price()
