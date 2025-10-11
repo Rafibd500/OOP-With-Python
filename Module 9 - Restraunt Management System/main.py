@@ -74,19 +74,32 @@ def admin_menu():
             admin.add_employee(restraunt, employee)
             print()
         elif choice == 3:
-            admin.view_employee()
+            admin.view_employee(restraunt)
             print()
         elif choice == 4:
-            restraunt.menu.view_items()
+            # menu.view_items()
             admin.view_menu(restraunt)
             print()
         elif choice  == 5:
             name = input("Enter menu item name: ")
-            admin.remove_item(name)
+            admin.remove_item(restraunt, name)
             print()
         elif choice  == 6:
             break
         else: print("Invalid choice", end = '\n')
 
+while 1:
+    print("Welcome to the system")
+    print("1. Customer")
+    print("2. Admin")
+    print("3. Exit")
+    choice = int(input("Enter your choice : "))
+    if choice == 1:
+        customer_menu()
+    elif choice == 2:
+        admin_menu()
+    elif choice == 3:
+        break
+    else:
+        print("Invalid Input!!")
 
-admin_menu()

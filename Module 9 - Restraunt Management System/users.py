@@ -61,7 +61,7 @@ class Admin(User):
     def add_item(self, restraunt, item):
         restraunt.menu.add_menu_item(item)
     def view_menu(self, restraunt):
-        restraunt.view_menu()
+        restraunt.menu.view_items()
     def remove_item(self, restraunt, item):
         restraunt.menu.remove_item(item)
 
