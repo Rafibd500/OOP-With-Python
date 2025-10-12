@@ -24,5 +24,5 @@ def multiple(a, b):
     # return sum, mul, div, mod, sub
 
     # return in list
-    return [sum, mul, div, mod, sub]
-print(multiple(1,2))
+#     return [sum, mul, div, mod, sub]
+# print(multiple(1,2))
